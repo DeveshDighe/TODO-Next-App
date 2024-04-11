@@ -19,12 +19,9 @@ const TodoInput = ({ editVal }) => {
 
   const GetUserProfile = async (token) => {
     try {
-      console.log(token, 'Token');
       const responce = await axios.post('/authenticate/getuserprofile',{token} )
       if (responce.data.success) {
-        console.log(responce.data , 'Log responce data');
         dispatch({type : 'LOGIN', payload : responce.data.user})
-        console.log(responce.data.user.todoList, 'responce.data.todoListresponce.data.todoList');
         dispatchT(addTodo(responce.data.user.todoList))
       }
     } catch (error) {
@@ -41,54 +38,46 @@ const TodoInput = ({ editVal }) => {
 
 
 
-  console.log(state.user, 'userstatedfdfdfdfdfdfdfdf');
 
   useEffect(() => {
     if (editVal) {
       todoTask.current.value = editVal.task;
       editTaskId.current = editVal.id;
       setid(editVal.id)
-      console.log(todoTask, 'todoTask');
-      console.log(editTaskId.current , 'editTaskId');
     }
   }, [editVal]);
 
   const dispatchT = useDispatch()
 
   const handleAdd = async () => {
-    console.log(todoTask.current.value, 'todotask current value');
     let task = { task: todoTask.current.value, userId : state.user._id };
 
 
     try {
       const responce = await axios.post('/api', {task})
       if (responce.data.success) {
-        console.log(responce.data, 'responxe');
         const token = JSON.parse(localStorage.getItem('UserToken'))
         GetUserProfile(token)
         todoTask.current.value = ''
         toast.success('Task is added')
       }
     } catch (error) {
-      console.log(error);
-      toast.error('Error')
+
     }
   }
 
 const handleEdit = async () => {
   try {
-    console.log('1234');
     const responce = await axios.put('/api/editTask', { todoTask: todoTask.current.value, editTaskId: editTaskId.current });
     if (responce.data.success) {
-      console.log(responce.data, 'responxe');
       setid(null)
-      const token = JSON.parse(localStorage.getItem('UserToken')) 
-        GetUserProfile(token)
+      const token = await JSON.parse(localStorage.getItem('UserToken')) 
+      GetUserProfile(token)
       todoTask.current.value = ''
       toast.success('Task is added')
     }
   } catch (error) {
-    console.error('Error:', error);
+
   }
 }
 

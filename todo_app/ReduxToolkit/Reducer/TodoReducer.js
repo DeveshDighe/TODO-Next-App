@@ -7,7 +7,6 @@ export const TodoReducer = createSlice({
 
   reducers : {
     addTodo : (state, action) => {
-      console.log('Hit hua kya');
       state.TodoData = action.payload
     },
     removeTodo : (state) => {

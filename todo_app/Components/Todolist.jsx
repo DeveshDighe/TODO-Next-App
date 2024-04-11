@@ -24,17 +24,15 @@ const Todolist = () => {
 
   const {state, dispatch} = useContext(MyContext)
 
-  console.log(state?.user, 'userstate');
+
 
   const dispatchT = useDispatch()
 
   const handleDone =async (id) => {
     let updateData = {isDone : true, id}
-    console.log(updateData, 'updateData');
     try {  
       const responce = await axios.put('/api',updateData )
       if (responce.data.success) {
-        console.log(responce, 'This is my updated responce');
         const token = JSON.parse(localStorage.getItem('UserToken')) 
         GetUserProfile(token)
         toast.success(responce.data.msg)
@@ -49,8 +47,6 @@ const Todolist = () => {
       const response = await axios.get('/api')
       if (response.data.success) {
         dispatchT(addTodo(response.data.allTodoData))
-        // setallTodoData(response.data.allTodoData)
-        console.log(response.data.allTodoData ,'resrsrsresr');
       }
     } catch (error) {
       
@@ -59,12 +55,9 @@ const Todolist = () => {
 
   const GetUserProfile = async (token) => {
     try {
-      console.log(token, 'Token');
       const responce = await axios.post('/authenticate/getuserprofile',{token} )
       if (responce.data.success) {
-        console.log(responce.data , 'Log responce data');
         dispatch({type : 'LOGIN', payload : responce.data.user})
-        console.log(responce.data.user.todoList, 'responce.data.todoListresponce.data.todoList');
         dispatchT(addTodo(responce.data.user.todoList))
       }
     } catch (error) {
@@ -83,23 +76,19 @@ const Todolist = () => {
   const handleDelete = async (id) => {
     let updateData = {isDone : true, id}
     try {
-      console.log(updateData, 'deleteID');
       const responce = await axios.delete('/api',{ data: { id } })
       if (responce.data.success) {
-        toast.success('Task is deleted')
         const token = JSON.parse(localStorage.getItem('UserToken')) 
         GetUserProfile(token)
-        console.log(responce.data);
+        toast.success('Task is deleted')
       }
     } catch (error) {
-      console.log(error);
     }
   }
 
   const handleEdit = async (id, task) => {
     try {
       seteditTodoData({task, id})
-      console.log(editTodoData, 'editTodoData');
     } catch (error) {
       
     }

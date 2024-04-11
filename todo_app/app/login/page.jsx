@@ -20,25 +20,19 @@ function Login() {
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
 
-    // Here you can perform form validation, API calls, etc.
-    // For demonstration purposes, let's just log the values
-    console.log('Email:', email);
-    console.log('Password:', password);
 
     try {
       const responce = await axios.post('/authenticate/login', {email, password})
-      console.log(responce,'Login responce');
       if (responce.data.success) {
         localStorage.setItem('UserToken', JSON.stringify(responce.data.token))
         router.push('/')
         toast.success('Login Successful')
       }
       else{
-        console.log('dfdfdfdfdf');
         toast.error(responce.data.msg)
       }
     } catch (error) {
-      console.log(error);
+      
     }
     
   };

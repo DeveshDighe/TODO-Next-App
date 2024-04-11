@@ -26,16 +26,10 @@ function Register() {
     const confirmPassword = confirmPasswordRef.current.value;
 
     if (password !== confirmPassword) {
-      console.log('dfdfdfd');
       return toast.error('password and confirmpassword did not match')
     }
 
-    // Here you can perform form validation, API calls, etc.
-    // For demonstration purposes, let's just log the values
-    console.log('Name:', name);
-    console.log('Email:', email);
-    console.log('Password:', password);
-    console.log('Confirm Password:', confirmPassword);
+
 
     try {
       const responce = await axios.post('/authenticate/register', { name, email, password })
@@ -44,7 +38,7 @@ function Register() {
         toast.success('Registration Successful')
       }
     } catch (error) {
-      console.log(error);
+
     }
 
   };

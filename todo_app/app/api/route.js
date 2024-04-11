@@ -16,7 +16,7 @@ export async function GET(request){
     if (!allTodoData) {
       return NextResponse.json({msg : 'No task', success : false})
     }
-    console.log(allTodoData, 'alldata');
+
 
     return NextResponse.json({msg : 'Task found', success : true , allTodoData})
   } catch (error) {
@@ -26,12 +26,12 @@ export async function GET(request){
 
 export async function POST(request){
   try {
-    console.log('sdfsfsdfsfsfsfsdf');
+
     const {task} = await request.json()
-    console.log(task, 'taskdfgdgdgdgdgdgdgdgdgfdgdfgdfgdfggfdgdfgdfgdgd');
+
 
     const user = await UserModel.findById(task.userId)
-    console.log(user, 'useuseusususuueuseueusueuueuse');
+
 
     let createdTask = await TodoModel.create({
       task : task.task,
@@ -43,19 +43,19 @@ export async function POST(request){
 
     return NextResponse.json({msg: 'Todo created', success : true, createdTask})
   } catch (error) {
-    console.log(error, 'erererererererrererererer');
+
   }
   
 }
 
 
 export async function PUT(request) {
-  console.log('sdffsffsfs');
+
   try {
     const {isDone, id} = await request.json() 
     if (isDone) {
       const Task = await TodoModel.findById(id)
-      console.log(Task, 'Task Taks');
+
       if (Task.status == true) {
         return NextResponse.json({msg : 'Task already completed', success : true})
       }
@@ -71,7 +71,7 @@ export async function PUT(request) {
 }
 
 export async function anotherPut() {
-  console.log('dsfdsfdsff , another put is jdjd');
+
   try {
 
     
@@ -83,12 +83,12 @@ export async function anotherPut() {
 
 
 export async function DELETE(request) {
-  // console.log('Request received:', request);
+
 
   try {
-    console.log('dadadadadadadad');
+
     const {id} = await request.json()
-    console.log(id , 'idididididididididid');
+
 
     const deletedTask = await TodoModel.findByIdAndDelete(id)
 

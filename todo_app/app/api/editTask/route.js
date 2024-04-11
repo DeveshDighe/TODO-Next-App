@@ -11,7 +11,6 @@ LoadDb()
 export async function PUT(request){
   try {
     const {editTaskId , todoTask} = await request.json();
-    console.log(editTaskId, todoTask , 'id and taskdata');
 
     const updatedTask = await TodoModel.findByIdAndUpdate(editTaskId, {task : todoTask})
     
